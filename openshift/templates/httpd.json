@@ -25,7 +25,7 @@
       "kind": "Service",
       "apiVersion": "v1",
       "metadata": {
-        "name": "${NAME}",
+        "name": "example-apache",
         "annotations": {
           "description": "Exposes and load balances the application pods"
         }
@@ -34,12 +34,12 @@
         "ports": [
           {
             "name": "web",
-            "port": 9080,
-            "targetPort": 9080
+            "port": 8080,
+            "targetPort": 8080
           }
         ],
         "selector": {
-          "name": "${NAME}"
+          "name": "exam-apache"
         }
       }
     },
@@ -47,13 +47,13 @@
       "kind": "Route",
       "apiVersion": "v1",
       "metadata": {
-        "name": "${NAME}"
+        "name": "ea-route"
       },
       "spec": {
-        "host": "${APPLICATION_DOMAIN}",
+        "host": "https://exam-apache-YOURPROJECT.ose-bootcamp-1612539632-f72ef11f3ab089a8c677044eb28292cd-0000.sjc03.containers.appdomain.cloud",
         "to": {
           "kind": "Service",
-          "name": "${NAME}"
+          "name": "ea-service"
         },
         "port": {
           "targetPort": "web"
@@ -69,7 +69,7 @@
       "kind": "ImageStream",
       "apiVersion": "v1",
       "metadata": {
-        "name": "${NAME}",
+        "name": "ea-is",
         "annotations": {
           "description": "Keeps track of changes in the application image"
         }
@@ -79,7 +79,7 @@
       "kind": "BuildConfig",
       "apiVersion": "v1",
       "metadata": {
-        "name": "${NAME}",
+        "name": "ea-bc",
         "annotations": {
           "description": "Defines how to build the application",
           "template.alpha.openshift.io/wait-for-ready": "true"
@@ -107,7 +107,7 @@
         "output": {
           "to": {
             "kind": "ImageStreamTag",
-            "name": "${NAME}:latest"
+            "name": "exam-apache:latest"
           }
         },
         "triggers": [
@@ -218,7 +218,7 @@
   "parameters": [
     {
       "name": "NAME",
-      "displayName": "Name",
+      "displayName": "exam-apache",
       "description": "The name assigned to all of the frontend objects defined in this template.",
       "required": true,
       "value": "example-apache"
